@@ -1,9 +1,3 @@
-package SortingAlgorithms;
-
-
-/**
- * Created by Daniel on 2015/12/1.
- */
 public class InsertionSort {
     public static void sort(int[] a) {
         for(int i = 1; i < a.length; i++) {
