@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BST {
     public Node root;
 
@@ -67,11 +69,15 @@ public class BST {
     }
 
     public Node min() {
-        Node n = root;
-        while(n.left != null) {
-            n = n.left;
+        return min(root);
+    }
+
+    private Node min(Node n) {
+        if(n.left == null) {
+            return n;
+        } else {
+            return min(n.left);
         }
-        return n;
     }
 
     public int floor(int key) {
@@ -91,11 +97,11 @@ public class BST {
             }
         }
     }
-    
+
     public int select(int ranking) {
         return select(root, ranking).key;
     }
-    
+
     private Node select(Node n, int r) {
         if (n == null) {
             return null;
@@ -111,11 +117,11 @@ public class BST {
             }
         }
     }
-    
+
     public int rank(int key) {
         return rank(root, key);
     }
-    
+
     private int rank(Node n, int k) {
         if(n == null) {
             return 0;
@@ -130,7 +136,67 @@ public class BST {
             }
         }
     }
+
+    public void deleteMin() {
+        root = deleteMin(root);
+    }
+
+    private Node deleteMin(Node n) {
+        if(n.left == null) {
+            return n.right;
+        }
+        n.left = deleteMin(n.left);
+        n.N = size(n.left) + size(n.right) + 1;
+        return n;
+    }
+
+    public void delete(int key) {
+        root = delete(root, key);
+    }
+
+    private Node delete(Node n, int k) {
+        if(n == null) {
+            return null;
+        }
+        if(n.key == k)  {
+            if(n.right == null) {
+                return n.left;
+            } else {
+                if(n.left == null) {
+                    return n.right;
+                } else {
+                    Node t = n;
+                    n = min(n.right);
+                    n.left = t.left;
+                    n.right = deleteMin(t.right);
+                }
+            }
+        } else {
+            if(k < n.key) {
+                n.left = delete(n.left, k);
+            } else {
+                n.right = delete(n.right, k);
+            }
+        }
+        n.N = size(n.left) + size(n.right) + 1;
+        return n;
+    }
     
+    public ArrayList<Integer> Keys(int lo, int hi) {
+        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        Keys(arrayList, root, lo, hi);
+        return arrayList;
+    }
+    
+    private void Keys(ArrayList<Integer> arrayList, Node n, int lo, int hi) {
+        if(n == null) {
+            return;
+        }
+        if(lo < n.key) Keys(arrayList, n.left, lo, hi);
+        if(lo <= n.key && hi >= n.key) arrayList.add(n.key);
+        if(hi > n.key) Keys(arrayList, n.right, lo, hi);
+    }
+
     public static void main(String[] args) {
         BST r = new BST();
         r.put(2, "root");
