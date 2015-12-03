@@ -141,7 +141,7 @@ public static class PrimMST {
 		pq = new PriorityQueue<>();
 		
         for(int i = 1; i < g.V(); i++) {
-            distTo[i] = Double.MAX_VALUE;
+            distTo[i] = Double.POSITIVE_INFINITY;
         }
 		
 		edgeTo[0] = 0.0;
