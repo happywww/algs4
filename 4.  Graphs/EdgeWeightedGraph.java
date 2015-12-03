@@ -138,11 +138,13 @@ public static class PrimMST {
         edgeTo = new int[g.V()];
         distTo = new double[g.V()];
         marked = new boolean[g.V()];
-
+		pq = new PriorityQueue<>();
+		
         for(int i = 1; i < g.V(); i++) {
             distTo[i] = Double.MAX_VALUE;
         }
-
+		
+		edgeTo[0] = 0.0;
         pq.add(new NearstV(0, 0));
         while (!pq.isEmpty()) {
             visit(g, pq.poll().v);
